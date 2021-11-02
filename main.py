@@ -77,6 +77,7 @@ class resp_gui( QtWidgets.QMainWindow ):
 					for i in tmp_param_info:
 						combobox.addItem(i)
 					combobox.setCurrentIndex( cur_val )
+					combobox.setSizeAdjustPolicy(QtWidgets.QComboBox.AdjustToContents)
 					combobox.currentIndexChanged.connect( lambda state=True, x=[param,combobox]: self.update_val_parameter(x) )
 					layout.addWidget( combobox )
 
@@ -140,6 +141,7 @@ class resp_gui( QtWidgets.QMainWindow ):
 				for i in tmp_param_info:
 					tmp_opts += f"{i}\n"
 				read_only_value.setToolTip(tmp_opts)
+				read_only_value.setAlignment(QtGui.Qt.AlignRight)
 				layout.addWidget( read_only_value )
 				widget.setLayout(layout)
 
