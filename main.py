@@ -22,6 +22,7 @@ class resp_gui( QtWidgets.QMainWindow ):
 		self.ui.show()
 
 		self.current_values = {}
+		self.device = res_tuning.find()
 		self.update_current_values()
 		self.populate_list()
 
@@ -147,19 +148,18 @@ class resp_gui( QtWidgets.QMainWindow ):
 				self.ui.listWidget.setItemWidget( item, widget )
 
 	def update_current_values( self ):
-		dev = res_tuning.find()
 		for name in sorted( res_tuning.PARAMETERS.keys() ):
-			temp_current_val = dev.read(name)
+			temp_current_val = self.device.read(name)
 			self.current_values[ name ] = {"defaults": res_tuning.PARAMETERS[name], "cur_val": temp_current_val }
 
 	def update_bool_parameter( self, par_name ):
-		print(par_name[0], int(par_name[1].isChecked()))
+		self.device.write( par_name[0], int( par_name[1].isChecked() ) )
 
 	def update_val_parameter( self, par_name ):
-		print(par_name[0], par_name[1].currentIndex())
+		self.device.write( par_name[0], par_name[1].currentIndex() )
 
 	def update_float_parameter( self, par_name ):
-		print(par_name[0], par_name[1].value())
+		self.device.write( par_name[0], par_name[1].value() )
 
 if __name__ == '__main__':
 
